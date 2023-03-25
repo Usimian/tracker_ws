@@ -20,5 +20,7 @@
         "/home/mw/robot_ws/install/arduino_msgs/lib/python3.8/site-packages",
         "/opt/ros/galactic/lib/python3.8/site-packages"
     ],
-    "cmake.sourceDirectory": "${workspaceFolder}/src/articubot_one"
+    "cmake.sourceDirectory": "${workspaceFolder}/src/articubot_one",
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }

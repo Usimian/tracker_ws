@@ -26,9 +26,9 @@ class DetectBall(Node):
         super().__init__("detect_ball")
 
         self.get_logger().info("Looking for the ball...")
-        self.image_sub = self.create_subscription(
-            Image, "/image_in", self.callback, rclpy.qos.QoSPresetProfiles.SENSOR_DATA.value
-        )
+        # self.image_sub = self.create_subscription
+        #   (Image, "/image_in", self.callback, rclpy.qos.QoSPresetProfiles.SENSOR_DATA.value)
+        self.image_sub = self.create_subscription(Image, "/image_in", self.callback, 10)
         self.image_out_pub = self.create_publisher(Image, "/image_out", 1)
         self.image_tuning_pub = self.create_publisher(Image, "/image_tuning", 1)
         self.ball_pub = self.create_publisher(Point, "/detected_ball", 1)
@@ -80,6 +80,14 @@ class DetectBall(Node):
                 self.tuning_params = proc.get_tuning_params()
 
             keypoints_norm, out_image, tuning_image = proc.find_circles(cv_image, self.tuning_params)
+
+            color = (255, 0, 0)  # - line's color
+            line = 5  # - line's thickness
+            rect_px = (50, 50, 100, 100)  # - window in adimensional units
+
+            # cv2.line (out_image, Point pt1, Point pt2, const Scalar &color,
+            #    int thickness=1, int lineType=LINE_8, int shift=0)
+            cv2.rectangle(tuning_image, (rect_px[0], rect_px[1]), (rect_px[2], rect_px[3]), color, line)
 
             img_to_pub = self.bridge.cv2_to_imgmsg(out_image, "bgr8")
             img_to_pub.header = data.header
