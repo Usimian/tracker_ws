@@ -81,13 +81,22 @@ class DetectBall(Node):
 
             keypoints_norm, out_image, tuning_image = proc.find_circles(cv_image, self.tuning_params)
 
-            color = (255, 0, 0)  # - line's color
-            line = 5  # - line's thickness
-            rect_px = (50, 50, 100, 100)  # - window in adimensional units
+            color = (255, 128, 0)  # line color
+            line = 5  # line thickness
 
             # cv2.line (out_image, Point pt1, Point pt2, const Scalar &color,
             #    int thickness=1, int lineType=LINE_8, int shift=0)
-            cv2.rectangle(tuning_image, (rect_px[0], rect_px[1]), (rect_px[2], rect_px[3]), color, line)
+            # x1 = keypoints_norm[0].pt[0]-50
+            # y1 = keypoints_norm[0].pt[1]
+            # x2 = keypoints_norm[0].pt[0]+50
+            # y2 = keypoints_norm[0].pt[1]
+            # cv2.line(out_image, (x1, y1), (x2, y2), color, line)
+            # x1 = keypoints_norm[0].pt[0]
+            # y1 = keypoints_norm[0].pt[1]-50
+            # x2 = keypoints_norm[0].pt[0]
+            # y2 = keypoints_norm[0].pt[1]+50
+            # cv2.line(out_image, (x1, y1), (x2, y2), color, line)
+            # cv2.rectangle(out_image, (rect_px[0], rect_px[1]), (rect_px[2], rect_px[3]), color, line)
 
             img_to_pub = self.bridge.cv2_to_imgmsg(out_image, "bgr8")
             img_to_pub.header = data.header
@@ -115,6 +124,7 @@ class DetectBall(Node):
 
             if point_out.z > 0:
                 self.ball_pub.publish(point_out)
+
         except CvBridgeError as e:
             print(e)
 
