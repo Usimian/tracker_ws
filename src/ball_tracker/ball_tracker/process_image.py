@@ -39,8 +39,8 @@ def find_circles(image, tuning_params):
     working_image = cv2.inRange(working_image, thresh_min, thresh_max)
 
     # Dilate and Erode
-    working_image = cv2.dilate(working_image, None, iterations=2)
-    working_image = cv2.erode(working_image, None, iterations=2)
+    # working_image = cv2.dilate(working_image, None, iterations=2)
+    # working_image = cv2.erode(working_image, None, iterations=2)
 
     # Make a copy of the image for tuning
     tuning_image = cv2.bitwise_and(image, image, mask=working_image)

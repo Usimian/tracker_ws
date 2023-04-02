@@ -15,7 +15,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, PointStamped
 import cv2  # noqa: F401 (this is needed for cv_bridge)
 from cv_bridge import CvBridge, CvBridgeError
 import ball_tracker.process_image as proc
@@ -40,6 +40,7 @@ class DetectBall(Node):
         self.declare_parameter("y_min", 0)
         self.declare_parameter("y_max", 100)
         self.declare_parameter("h_min", 0)
+        
         self.declare_parameter("h_max", 180)
         self.declare_parameter("s_min", 0)
         self.declare_parameter("s_max", 255)
@@ -81,8 +82,8 @@ class DetectBall(Node):
 
             keypoints_norm, out_image, tuning_image = proc.find_circles(cv_image, self.tuning_params)
 
-            color = (255, 128, 0)  # line color
-            line = 5  # line thickness
+            # color = (255, 128, 0)  # line color
+            # line = 5  # line thickness
 
             # cv2.line (out_image, Point pt1, Point pt2, const Scalar &color,
             #    int thickness=1, int lineType=LINE_8, int shift=0)
